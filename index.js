@@ -33,6 +33,22 @@ const users = [
     { name: "David Brown", isAdmin: false, site: "HBG" }
 ];
 
+
+//AUTH0
+
+const { auth } = require("express-oauth2-jwt-bearer");
+
+require("dotenv").config();
+
+const jwtCheck = auth({
+  audience: "http://localhost:8080",
+  issuerBaseURL: "https://dev-dhtcsec1v610ng10.eu.auth0.com/",
+  tokenSigningAlg: "RS256",
+
+});
+
+//END AUTH0
+
 app.get('/api/seeds', async (req, res) => {
     users.forEach(u => User.create(u));
     res.json(users);
@@ -45,6 +61,9 @@ app.use(cors());
 app.use(express.json());
 // This will serve the React build when we deploy our app
 app.use(express.static("react-frontend/dist"));
+
+// AUTH0 Enforce on all endpoints
+app.use(jwtCheck);
 
 // This route will return 'Hello Ikea!' when you go to localhost:8080/ in the browser
 app.get("/", (req, res) => {
