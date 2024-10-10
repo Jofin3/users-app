@@ -4,10 +4,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
     const [users, setUsers] = useState([]);
-    const hostUrl = import.meta.env.PROD
+    const hostUrl = "http://localhost:8080/";
+
+/*         const hostUrl = import.meta.env.PROD
         ? window.location.href
         : "http://localhost:8080/";
-
+ */
 
     const { getAccessTokenSilently } = useAuth0();
 

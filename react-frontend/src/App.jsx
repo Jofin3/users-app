@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 function App() {
   const { isAuthenticated } = useAuth0();
 
+
   return (
     <Router>
       <div>
