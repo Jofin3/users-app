@@ -36,6 +36,7 @@ const users = [
 
 //AUTH0
 
+
 const { auth } = require("express-oauth2-jwt-bearer");
 
 require("dotenv").config();
