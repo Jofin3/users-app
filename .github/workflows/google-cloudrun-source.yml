@@ -51,8 +51,6 @@ jobs:
       - name: 'Checkout'
         uses: 'actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332' # actions/checkout@v4
           
-          
-        
       - name: Install Dependencies
         working-directory: ./react-frontend
         run: npm install
@@ -60,8 +58,7 @@ jobs:
       - name: Build React App
         working-directory: ./react-frontend
         run: npm run build
-        
-
+      
         # NOTE: Alternative option - authentication via credentials json
       - name: Google Auth
         id: auth
