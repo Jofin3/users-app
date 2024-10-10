@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "/home/du_229310-1725904566/ikea-users-app/react-frontend/src/App.css";
+import "../App.css";
 import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
