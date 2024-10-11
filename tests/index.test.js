@@ -1,19 +1,35 @@
 const request = require('supertest');
 const { app, server } = require('../index');
+require('dotenv').config();
 
-const jwt = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjdmUG1VazdVeENLc2NBUlFOMVVScyJ9.eyJpc3MiOiJodHRwczovL2Rldi1kaHRjc2VjMXY2MTBuZzEwLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDEwNjg1ODMxMDM0MjA3NzAzODA1NiIsImF1ZCI6WyJodHRwOi8vbG9jYWxob3N0OjgwODAiLCJodHRwczovL2Rldi1kaHRjc2VjMXY2MTBuZzEwLmV1LmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE3Mjg1NzA0OTksImV4cCI6MTcyODY1Njg5OSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsImF6cCI6IkNRNTBhUFd1blFVS3k3cmtCQU9WcldEcHd2T01aMUFOIn0.VWiiC-BbAC1OtcTRQJ0elWdgJNHjPwWzu4A0pLsw2ubyDfb2xPnN5Hw3OubESIet5YS9ove12tFA2Caul88OBuqYCJctheCrcBpDILJqdOY-guj_BFY_UcGNCwij6rCF4eiFZ3u7kZfLSolpchhfxXpY27kyXHpoBpzAFxkS1ldK8w6l68hLYc_VpmOM4hxrOAautGvo158TFrzTWjQ1E975TGsknVjLxHgNmF2CI63O_kQlYYJobK3ZZdnBYnrdNPedutKWxbig9RXs_hVp0RFnb_txNJc6z4IGtv5kVZCPc1MmPUhjDSd9HtLwJjrmFUTuwbnPP4I65dGbpfyH_g';
-
+let jwt = 0;
 let testId = 0;
+
+
 
 describe('Test the root path', () => {
     test('It should respond with "401" response code if access token is missing', async () => {
-        console.log(jwt);
         const response = await request(app)
             .get('/api/users');
         expect(response.statusCode).toBe(401);
     });
 
     test('It should respond with "200" response code', async () => {
+        
+        const auth0Response = await request('https://dev-hhi8n1mn61ygvjm5.eu.auth0.com/oauth/token')
+        .post('') // POST request
+        .set('Content-Type', 'application/x-www-form-urlencoded') // Setting the Content-Type header
+        .send({
+          grant_type: 'client_credentials', // Sending body parameters
+          client_id: process.env.CLIENT_ID,
+          client_secret: process.env.CLIENT_SECRET,
+          audience: 'http://localhost:8080/'
+        });
+        expect(auth0Response.statusCode).toBe(200);
+        expect(auth0Response.body.access_token).toBeTruthy();
+
+        jwt = auth0Response.body.access_token;
+        
         console.log(jwt);
         const response = await request(app)
             .get('/api/users')

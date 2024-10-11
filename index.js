@@ -42,8 +42,8 @@ const { auth } = require("express-oauth2-jwt-bearer");
 require("dotenv").config();
 
 const jwtCheck = auth({
-  audience: "http://localhost:8080",
-  issuerBaseURL: "https://dev-dhtcsec1v610ng10.eu.auth0.com/",
+  audience: "http://localhost:8080/",
+  issuerBaseURL: "https://dev-hhi8n1mn61ygvjm5.eu.auth0.com/",
   tokenSigningAlg: "RS256",
 
 });
